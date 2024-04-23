@@ -1,10 +1,11 @@
-import PassGenerator from "./components/passwordGenerator";
+// import PassGenerator from "./components/passwordGenerator";
 import "./App.css";
+import RemakeComponent from "./components/RemakePassword";
 
 function App() {
   return (
     <>
-      <PassGenerator />
+      <RemakeComponent />
     </>
   );
 }

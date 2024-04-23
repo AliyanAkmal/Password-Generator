@@ -49,6 +49,8 @@ const RemakeComponent = () => {
             <input
               type="range"
               value={rangeLength}
+              min={8}
+              max={30}
               onChange={(e) => setRangeLength(e.target.value)}
             />
             <label>Range: {rangeLength}</label>
@@ -60,8 +62,9 @@ const RemakeComponent = () => {
               onChange={() => {
                 setNumber((prev) => !prev);
               }}
+              id="number"
             />
-            <label>Number</label>
+            <label htmlFor="number">Number</label>
           </div>
           <div>
             <input
@@ -70,8 +73,9 @@ const RemakeComponent = () => {
               onChange={() => {
                 setCharacter((prev) => !prev);
               }}
+              id="character"
             />
-            <label>Character</label>
+            <label htmlFor="character">Character</label>
           </div>
         </div>
       </div>

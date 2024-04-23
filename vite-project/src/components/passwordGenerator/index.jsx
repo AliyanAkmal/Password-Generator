@@ -1,20 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const PassGenerator = () => {
   const [Password, setPassword] = useState("");
   const [range, setRange] = useState(8);
-  const [number, setNumber] = useState(true);
-  const [character, setCharacter] = useState(true);
+  const [number, setNumber] = useState(false);
+  const [character, setCharacter] = useState(false);
 
   const Generator = useCallback(() => {
     let getPassword = "";
     let getstring = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    if (number) {
-      getstring += "0123456789";
-    }
-    if (character) {
-      getstring += "!@#$%^&*()";
-    }
+    if (number) getstring += "123456789";
+    //////////////////////////////////////////////
+    if (character) getstring += "!@#$%^&*()";
+
     for (let index = 1; index < range; index++) {
       const wholePass = Math.floor(Math.random() * getstring.length + 1);
       getPassword += getstring.charAt(wholePass);
@@ -24,16 +22,28 @@ const PassGenerator = () => {
 
   useEffect(() => {
     Generator();
-  }, [setPassword, range, number, character]);
+  }, [range, number, character]);
+  /////////////////////////////
+  const passRef = useRef(null);
+  ////////////////////////////
+  const handleClick = useCallback(() => {
+    passRef.current?.select();
+    window.navigator.clipboard.writeText(Password);
+  }, [Password]);
   return (
     <>
       <div style={{ backgroundColor: "gainsboro", padding: "15px 25px" }}>
         <h3>Password Password Generator</h3>
-        <input
-          style={{ width: "100%", padding: "5px" }}
-          type="text"
-          value={Password}
-        />
+        <div style={{ display: "flex" }}>
+          <input
+            style={{ width: "100%", padding: "5px" }}
+            type="text"
+            value={Password}
+            ref={passRef}
+          />
+          <button onClick={handleClick}>copy</button>
+        </div>
+
         <br />
         <input
           style={{ width: "30%" }}
@@ -49,16 +59,16 @@ const PassGenerator = () => {
         <input
           type="checkbox"
           defaultChecked={number}
-          onChange={(prev) => {
-            setNumber(!prev);
+          onChange={() => {
+            setNumber((prev) => !prev);
           }}
         />
         <label htmlFor="">numbers</label>
         <input
           type="checkbox"
           defaultChecked={character}
-          onChange={(prev) => {
-            setCharacter(!prev);
+          onChange={() => {
+            setCharacter((prev) => !prev);
           }}
         />
         <label htmlFor="">characters</label>
